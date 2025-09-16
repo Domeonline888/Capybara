@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capybara Kitchen - Retreat Kalkulator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 900px;
+            width: 100%;
+            overflow: hidden;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2d3561 0%, #c850c0 50%, #ffcc70 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"><animate attributeName="opacity" values="0;1;0" dur="3s" repeatCount="indefinite"/></circle><circle cx="80" cy="30" r="1.5" fill="rgba(255,255,255,0.1)"><animate attributeName="opacity" values="0;1;0" dur="4s" repeatCount="indefinite" begin="1s"/></circle><circle cx="40" cy="70" r="1" fill="rgba(255,255,255,0.1)"><animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="2s"/></circle></svg>');
+            pointer-events: none;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 40px;
+        }
+
+        .config-panel {
+            background: rgba(247, 250, 252, 0.8);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid rgba(226, 232, 240, 0.5);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: #2d3561;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::before {
+            content: '✨';
+            font-size: 1.2rem;
+        }
+
+        .option-group {
+            margin-bottom: 25px;
+        }
+
+        .option-label {
+            font-weight: 500;
+            color: #334155;
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+
+        .toggle-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .toggle-btn {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #64748b;
+            min-width: 120px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .toggle-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+            transition: left 0.5s;
+        }
+
+        .toggle-btn:hover::before {
+            left: 100%;
+        }
+
+        .toggle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .toggle-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .slider-container {
+            margin-top: 15px;
+        }
+
+        .slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #e2e8f0;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.6);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .participants-display {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #667eea;
+            margin-top: 10px;
+        }
+
+        .price-panel {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            position: relative;
+        }
+
+        .price-panel::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 18px;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .price-breakdown {
+            margin-bottom: 25px;
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .price-item:hover {
+            background: rgba(102, 126, 234, 0.05);
+            margin: 0 -15px;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .price-item:last-child {
+            border-bottom: none;
+        }
+
+        .price-label {
+            font-weight: 500;
+            color: #334155;
+        }
+
+        .price-value {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .total-price {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .total-price::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .total-label {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .total-amount {
+            font-size: 2.5rem;
+            font-weight: 600;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .per-person {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .cta-section {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(226, 232, 240, 0.5);
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 30px 20px;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .toggle-btn {
+                min-width: 100px;
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="logo">🌿 Capybara Kitchen</h1>
+            <p class="tagline">Nährende Kulinarik für transformative Retreat-Erlebnisse</p>
+        </div>
+        
+        <div class="content">
+            <div class="config-panel">
+                <h2 class="section-title">Dein Retreat konfigurieren</h2>
+                
+                <div class="option-group">
+                    <div class="option-label">Retreat-Dauer</div>
+                    <div class="toggle-container">
+                        <button class="toggle-btn active" onclick="setDuration('1day')">1 Tag</button>
+                        <button class="toggle-btn" onclick="setDuration('weekend')">Wochenende</button>
+                        <button class="toggle-btn" onclick="setDuration('4days')">4 Tage</button>
+                        <button class="toggle-btn" onclick="setDuration('week')">1 Woche</button>
+                    </div>
+                </div>
+                
+                <div class="option-group">
+                    <div class="option-label">Verpflegungskonzept</div>
+                    <div class="toggle-container">
+                        <button class="toggle-btn active" onclick="setMealPlan('full')">Vollverpflegung</button>
+                        <button class="toggle-btn" onclick="setMealPlan('brunch')">Brunch-Konzept</button>
+                    </div>
+                </div>
+                
+                <div class="option-group">
+                    <div class="option-label">Services</div>
+                    <div class="toggle-container">
+                        <button class="toggle-btn" id="shoppingBtn" onclick="toggleService('shopping')" style="display: none;">Einkaufsservice</button>
+                        <button class="toggle-btn" id="spicesBtn" onclick="toggleService('spices')" style="display: none;">Gewürzpauschale</button>
+                    </div>
+                </div>
+                
+
+            </div>
+            
+            <div class="price-panel">
+                <h2 class="section-title">Dein Investment</h2>
+                
+                <div class="price-breakdown">
+                    <div class="price-item">
+                        <span class="price-label">Grundpreis pro Person</span>
+                        <span class="price-value" id="basePrice">€27</span>
+                    </div>
+                    <div class="price-item" id="shoppingItem" style="display: none;">
+                        <span class="price-label">Einkaufsservice</span>
+                        <span class="price-value" id="shoppingPrice">€5</span>
+                    </div>
+                    <div class="price-item" id="spiceItem" style="display: none;">
+                        <span class="price-label">Gewürzpauschale</span>
+                        <span class="price-value" id="spicePrice">€1</span>
+                    </div>
+                </div>
+                
+                <div class="total-price">
+                    <div class="total-label">Preis pro Person</div>
+                    <div class="total-amount" id="totalAmount">€27</div>
+                    <div class="per-person" id="durationText">1 Tag</div>
+                </div>
+            </div>
+            
+            <div class="cta-section">
+                <button class="cta-button" onclick="generateOffer()">
+                    🌟 Individuelle Konfiguration
+                </button>
+                <p style="margin-top: 15px; color: #64748b; font-size: 0.9rem;">
+                    Lass uns dein Retreat zu einem unvergesslichen kulinarischen Erlebnis machen
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let config = {
+            duration: '1day',
+            mealPlan: 'full',
+            shopping: false,
+            spices: false
+        };
+
+        const prices = {
+            '1day': { full: 27, brunch: 24 },
+            weekend: { full: 46, brunch: 43 },
+            '4days': { full: 73, brunch: 67 },
+            week: { full: 180, brunch: 168 }
+        };
+
+        const shoppingPrices = {
+            '1day': 5,
+            weekend: 5,
+            '4days': 5,
+            week: 10
+        };
+
+        const spicePrices = {
+            '1day': 1,
+            weekend: 1,
+            '4days': 1,
+            week: 2
+        };
+
+        function setDuration(duration) {
+            // Remove active class from all duration buttons
+            const durationButtons = document.querySelectorAll('.option-group:nth-child(2) .toggle-btn');
+            durationButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            config.duration = duration;
+            
+            // Show/hide services based on duration
+            const shoppingBtn = document.getElementById('shoppingBtn');
+            const spicesBtn = document.getElementById('spicesBtn');
+            const shoppingItem = document.getElementById('shoppingItem');
+            const spiceItem = document.getElementById('spiceItem');
+            
+            if (duration === '1day') {
+                // Hide both services for 1 day
+                shoppingBtn.style.display = 'none';
+                spicesBtn.style.display = 'none';
+                // Also hide the price items
+                shoppingItem.style.display = 'none';
+                spiceItem.style.display = 'none';
+                // Reset config
+                config.shopping = false;
+                config.spices = false;
+                shoppingBtn.classList.remove('active');
+                spicesBtn.classList.remove('active');
+            } else {
+                // Show both services for longer durations
+                shoppingBtn.style.display = 'block';
+                spicesBtn.style.display = 'block';
+            }
+            
+            calculatePrice();
+        }
+
+        function setMealPlan(plan) {
+            // Remove active class from all meal plan buttons
+            const mealButtons = document.querySelectorAll('.option-group:nth-child(3) .toggle-btn');
+            mealButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            config.mealPlan = plan;
+            calculatePrice();
+        }
+
+        function toggleService(service) {
+            config[service] = !config[service];
+            const button = document.querySelector(`[onclick="toggleService('${service}')"]`);
+            button.classList.toggle('active');
+            
+            if (service === 'spices') {
+                document.getElementById('spiceItem').style.display = config.spices ? 'flex' : 'none';
+            }
+            
+            if (service === 'shopping') {
+                document.getElementById('shoppingItem').style.display = config.shopping ? 'flex' : 'none';
+            }
+            
+            calculatePrice();
+        }
+
+
+
+        function calculatePrice() {
+            let basePrice = prices[config.duration][config.mealPlan];
+            let totalPerPerson = basePrice;
+            
+            // Update shopping price display
+            const shoppingCost = shoppingPrices[config.duration];
+            document.getElementById('shoppingPrice').textContent = `€${shoppingCost}`;
+            
+            if (config.shopping) {
+                totalPerPerson += shoppingCost;
+            }
+            
+            // Update spice price display
+            const spiceCost = spicePrices[config.duration];
+            document.getElementById('spicePrice').textContent = `€${spiceCost}`;
+            
+            if (config.spices) {
+                totalPerPerson += spiceCost;
+            }
+            
+            // Update duration text
+            const durationTexts = {
+                '1day': '1 Tag',
+                'weekend': 'Wochenende',
+                '4days': '4 Tage',
+                'week': '1 Woche'
+            };
+            
+            document.getElementById('basePrice').textContent = `€${basePrice}`;
+            document.getElementById('totalAmount').textContent = `€${totalPerPerson}`;
+            document.getElementById('durationText').textContent = durationTexts[config.duration];
+        }
+
+        function generateOffer() {
+            // Konfiguration speichern für nächste Seite
+            const currentConfig = {
+                duration: config.duration,
+                mealPlan: config.mealPlan,
+                shopping: config.shopping,
+                spices: config.spices
+            };
+            
+            // In localStorage speichern für Übergabe an nächste Seite
+            localStorage.setItem('retreatConfig', JSON.stringify(currentConfig));
+            
+            // Zur detaillierten Konfigurationsseite weiterleiten
+            // Ersetze 'detaillierte-konfiguration.html' mit deinem tatsächlichen Dateinamen
+            window.location.href = 'detaillierte-konfiguration.html';
+        }
+
+        // Initialize
+        calculatePrice();
+    </script>
+</body>
+</html>
