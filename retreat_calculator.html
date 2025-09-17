@@ -133,16 +133,6 @@
             25%, 75% { opacity: 0.3; }
         }
 
-        .tagline {
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            font-weight: 300;
-            opacity: 0.9;
-            position: relative;
-            z-index: 1;
-            line-height: 1.4;
-        }
-
         .content {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -608,6 +598,7 @@
         }
 
         function generateOffer() {
+            // Konfiguration speichern für nächste Seite
             const currentConfig = {
                 duration: config.duration,
                 mealPlan: config.mealPlan,
@@ -615,7 +606,11 @@
                 spices: config.spices
             };
             
-            alert(`🌟 Vielen Dank für Ihr Interesse!\n\nIhre Konfiguration:\n- Dauer: ${config.duration}\n- Verpflegung: ${config.mealPlan}\n- Einkaufsservice: ${config.shopping ? 'Ja' : 'Nein'}\n- Gewürzpauschale: ${config.spices ? 'Ja' : 'Nein'}\n\nWir würden Sie zur detaillierten Konfiguration weiterleiten.`);
+            // In localStorage speichern für Übergabe an nächste Seite
+            localStorage.setItem('retreatConfig', JSON.stringify(currentConfig));
+            
+            // Zur detaillierten Konfigurationsseite weiterleiten
+            window.location.href = 'detailed_config.html';
         }
 
         // Initialize
