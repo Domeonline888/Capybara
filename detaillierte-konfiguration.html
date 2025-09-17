@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Küchenservice für Dein Retreat - Detaillierte Konfiguration</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&family=Pacifico&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5af19 75%, #f12711 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 30%, #f093fb 70%, #f5af19 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .logo {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.6rem;
+            font-weight: 400;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+            text-transform: none;
+        }
+
+        .tagline {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 300;
+            opacity: 1;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            color: white;
+            line-height: 1.4;
+        }
+
+        .back-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateX(-5px);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .step {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.12);
+        }
+
+        .step-title {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.7rem;
+            color: #667eea;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #2C5A6B;
+            margin-bottom: 12px;
+            display: block;
+            font-size: 1rem;
+        }
+
+        .toggle-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .toggle-btn {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(248,250,252,0.95));
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            border-radius: 15px;
+            padding: 14px 22px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 500;
+            color: #4a5568;
+            min-width: 120px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+        }
+
+        .toggle-btn:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+            border-color: #667eea;
+        }
+
+        .toggle-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+            font-weight: 600;
+        }
+
+        .toggle-btn:active {
+            transform: translateY(0) scale(0.98);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(248,250,252,0.95));
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+            color: #4a5568;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.25), 0 8px 20px rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .day-config {
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(248,250,252,0.95));
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.12);
+        }
+
+        .day-config:hover {
+            border-color: #667eea;
+            box-shadow: 0 12px 40px rgba(102, 126, 234, 0.3);
+            transform: translateY(-4px) scale(1.01);
+        }
+
+        .day-title {
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .day-number {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .meal-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .meal-btn {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(248,250,252,0.95));
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            border-radius: 12px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.9rem;
+            text-align: center;
+            color: #4a5568;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+        }
+
+        .meal-btn:hover {
+            border-color: #667eea;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.35);
+        }
+
+        .meal-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            font-weight: 600;
+            transform: scale(1.05);
+        }
+
+        .meal-btn:active {
+            transform: scale(0.98);
+            box-shadow: 0 3px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .price-summary {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(248,250,252,0.95));
+            border-radius: 20px;
+            padding: 30px;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            margin-top: 30px;
+            position: sticky;
+            top: 20px;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15);
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+            color: #4a5568;
+            font-weight: 400;
+        }
+
+        .price-item:nth-last-child(2) {
+            border-bottom: none;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: #667eea;
+            padding-top: 20px;
+            margin-top: 15px;
+            border-top: 2px solid #667eea;
+        }
+
+        .price-item:last-child {
+            border-bottom: none;
+            font-weight: 400;
+            font-size: 0.95rem;
+            color: #4a5568;
+            padding-top: 8px;
+        }
+
+        .cta-section {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            margin: 0 10px 10px 0;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 15px 45px rgba(102, 126, 234, 0.6);
+        }
+
+        .cta-button:active {
+            transform: translateY(-2px) scale(0.98);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .cta-button.secondary {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(248,250,252,0.95));
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .cta-button.secondary:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-5px) scale(1.03);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                border-radius: 16px;
+            }
+            
+            .header {
+                padding: 30px 15px;
+            }
+            
+            .logo {
+                font-size: 2rem;
+                letter-spacing: 1px;
+                line-height: 1.2;
+            }
+            
+            .tagline {
+                font-size: 1.3rem;
+                padding: 0 10px;
+            }
+            
+            .back-link {
+                font-size: 0.9rem;
+                padding: 8px 16px;
+                top: 15px;
+                left: 15px;
+            }
+            
+            .content {
+                padding: 25px 15px;
+            }
+            
+            .step {
+                padding: 20px 15px;
+                margin-bottom: 25px;
+                border-radius: 16px;
+            }
+            
+            .step-title {
+                font-size: 1.4rem;
+                margin-bottom: 15px;
+                gap: 10px;
+            }
+            
+            .step-number {
+                width: 30px;
+                height: 30px;
+                font-size: 0.9rem;
+            }
+            
+            .form-group {
+                margin-bottom: 20px;
+            }
+            
+            .form-label {
+                font-size: 0.95rem;
+                margin-bottom: 10px;
+            }
+            
+            .toggle-container {
+                gap: 8px;
+            }
+            
+            .toggle-btn {
+                min-width: 90px;
+                padding: 12px 16px;
+                font-size: 0.9rem;
+                flex: 1;
+                border-radius: 12px;
+            }
+            
+            .input-field {
+                padding: 12px 16px;
+                font-size: 1rem;
+                border-radius: 12px;
+            }
+            
+            .day-config {
+                padding: 20px 15px;
+                margin-bottom: 15px;
+                border-radius: 16px;
+            }
+            
+            .day-title {
+                font-size: 1.1rem;
+                margin-bottom: 15px;
+                gap: 10px;
+            }
+            
+            .day-number {
+                width: 28px;
+                height: 28px;
+                font-size: 0.85rem;
+            }
+            
+            .meal-options {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 8px;
+                margin-top: 12px;
+            }
+            
+            .meal-btn {
+                padding: 10px 12px;
+                font-size: 0.85rem;
+                border-radius: 10px;
+            }
+            
+            .price-summary {
+                padding: 20px 15px;
+                margin-top: 25px;
+                border-radius: 16px;
+                position: static;
+            }
+            
+            .price-summary h3 {
+                font-size: 1.3rem;
+                margin-bottom: 15px;
+            }
+            
+            .price-item {
+                padding: 10px 0;
+                font-size: 0.9rem;
+            }
+            
+            .price-item:nth-last-child(2) {
+                font-size: 1.2rem;
+                padding-top: 15px;
+                margin-top: 12px;
+            }
+            
+            .cta-section {
+                margin-top: 30px;
+                padding-top: 25px;
+            }
+            
+            .cta-button {
+                padding: 14px 24px;
+                font-size: 1rem;
+                border-radius: 20px;
+                width: 100%;
+                margin: 0 0 10px 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            
+            .header {
+                padding: 25px 12px;
+            }
+            
+            .logo {
+                font-size: 1.8rem;
+                letter-spacing: 0.5px;
+            }
+            
+            .tagline {
+                font-size: 1.1rem;
+            }
+            
+            .content {
+                padding: 20px 12px;
+            }
+            
+            .step {
+                padding: 18px 12px;
+                margin-bottom: 20px;
+            }
+            
+            .step-title {
+                font-size: 1.2rem;
+                gap: 8px;
+            }
+            
+            .step-number {
+                width: 26px;
+                height: 26px;
+                font-size: 0.8rem;
+            }
+            
+            .toggle-btn {
+                min-width: 80px;
+                padding: 10px 12px;
+                font-size: 0.85rem;
+            }
+            
+            .day-config {
+                padding: 16px 12px;
+            }
+            
+            .meal-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .meal-btn {
+                font-size: 0.8rem;
+                padding: 8px 10px;
+            }
+            
+            .price-summary {
+                padding: 18px 12px;
+            }
+            
+            .price-summary h3 {
+                font-size: 1.2rem;
+            }
+            
+            .price-item:nth-last-child(2) {
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .logo {
+                font-size: 1.6rem;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+            }
+            
+            .meal-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .meal-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="index.html" class="back-link">← Zurück</a>
+            <h1 class="logo">Küchenservice für Dein Retreat</h1>
+            <p class="tagline">Lust auf einen liebevollen Küchenservice für deine Retreats? Stell Deine Wünsche individuell zusammen und ich unterstütze Dein gelungenes Retreat.</p>
+        </div>
+        
+        <div class="content">
+            <!-- Schritt 1: Grundkonfiguration -->
+            <div class="step">
+                <h2 class="step-title">
+                    <span class="step-number">1</span>
+                    Grundkonfiguration
+                </h2>
+                
+                <div class="form-group">
+                    <label class="form-label">Anzahl Personen</label>
+                    <input type="number" class="input-field" id="participants" value="10" min="1" max="100" onchange="calculateTotal()">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Retreat-Dauer (Anzahl Tage)</label>
+                    <input type="number" class="input-field" id="duration" value="3" min="1" max="14" onchange="generateDays()">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Standard-Verpflegungskonzept</label>
+                    <div class="toggle-container">
+                        <button class="toggle-btn active" id="mealPlan-full" onclick="setMealPlan('full', this)">Vollverpflegung</button>
+                        <button class="toggle-btn" id="mealPlan-brunch" onclick="setMealPlan('brunch', this)">Brunch-Konzept</button>
+                        <button class="toggle-btn" id="mealPlan-custom" onclick="setMealPlan('custom', this)">Individuell</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Zusätzliche Services</label>
+                    <div class="toggle-container">
+                        <button class="toggle-btn active" id="shoppingBtn" onclick="toggleService('shopping')">Einkaufsservice (+€5)</button>
+                        <button class="toggle-btn active" id="spicesBtn" onclick="toggleService('spices')">Gewürzpauschale (+€1-2)</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Schritt 2: Tagesweise Konfiguration -->
+            <div class="step">
+                <h2 class="step-title">
+                    <span class="step-number">2</span>
+                    Tagesweise Konfiguration
+                </h2>
+                <div id="dayConfigs">
+                    <!-- Wird dynamisch generiert -->
+                </div>
+            </div>
+
+            <!-- Preisübersicht -->
+            <div class="price-summary">
+                <h3 style="margin-bottom: 20px; color: #667eea; font-family: 'Nunito', sans-serif; font-size: 1.6rem; font-weight: 600;">Preisübersicht</h3>
+                <div id="priceBreakdown">
+                    <!-- Wird dynamisch generiert -->
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="cta-section">
+                <button class="cta-button" onclick="generateQuote()">
+                    📧 Verbindliches Angebot anfordern
+                </button>
+                <button class="cta-button secondary" onclick="saveConfiguration()">
+                    💾 Konfiguration speichern
+                </button>
+                <p style="margin-top: 15px; color: #64748b; font-size: 0.9rem;">
+                    Alle Preise verstehen sich pro Person. Mindestanzahl: 10 Personen
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Globale Konfiguration
+        let config = {
+            participants: 10,
+            duration: 3,
+            mealPlan: 'full',
+            shopping: true,
+            spices: true,
+            days: []
+        };
+
+        // Preise
+        const prices = {
+            breakfast: 9,
+            lunch: 9,
+            dinner: 9,
+            brunch: 15
+        };
+
+        // Verpflegungskonzept setzen
+        function setMealPlan(plan, clickedButton) {
+            config.mealPlan = plan;
+            
+            // Alle Meal-Plan Buttons finden und deaktivieren
+            document.getElementById('mealPlan-full').classList.remove('active');
+            document.getElementById('mealPlan-brunch').classList.remove('active');
+            document.getElementById('mealPlan-custom').classList.remove('active');
+            
+            // Geklickten Button aktivieren
+            clickedButton.classList.add('active');
+            
+            // Tage neu generieren
+            generateDays();
+        }
+
+        // Services toggle
+        function toggleService(service) {
+            config[service] = !config[service];
+            
+            const button = document.getElementById(service === 'shopping' ? 'shoppingBtn' : 'spicesBtn');
+            button.classList.toggle('active');
+            
+            calculateTotal();
+        }
+
+        // Tage generieren
+        function generateDays() {
+            config.participants = parseInt(document.getElementById('participants').value);
+            config.duration = parseInt(document.getElementById('duration').value);
+            
+            const container = document.getElementById('dayConfigs');
+            container.innerHTML = '';
+            config.days = [];
+
+            for (let i = 1; i <= config.duration; i++) {
+                const day = {
+                    day: i,
+                    breakfast: config.mealPlan === 'full',
+                    lunch: config.mealPlan === 'full',
+                    dinner: config.mealPlan === 'full' || config.mealPlan === 'brunch',
+                    brunch: config.mealPlan === 'brunch'
+                };
+                config.days.push(day);
+
+                const dayDiv = document.createElement('div');
+                dayDiv.className = 'day-config';
+                dayDiv.innerHTML = `
+                    <div class="day-title">
+                        <span class="day-number">${i}</span>
+                        Tag ${i}
+                    </div>
+                    <div class="form-label">Mahlzeiten auswählen:</div>
+                    <div class="meal-options">
+                        <button class="meal-btn ${day.breakfast ? 'active' : ''}" onclick="toggleMeal(${i-1}, 'breakfast')">
+                            Frühstück (€9)
+                        </button>
+                        <button class="meal-btn ${day.lunch ? 'active' : ''}" onclick="toggleMeal(${i-1}, 'lunch')">
+                            Mittagessen (€9)
+                        </button>
+                        <button class="meal-btn ${day.brunch ? 'active' : ''}" onclick="toggleMeal(${i-1}, 'brunch')">
+                            Brunch (€15)
+                        </button>
+                        <button class="meal-btn ${day.dinner ? 'active' : ''}" onclick="toggleMeal(${i-1}, 'dinner')">
+                            Abendessen (€9)
+                        </button>
+                    </div>
+                `;
+                container.appendChild(dayDiv);
+            }
+            calculateTotal();
+        }
+
+        // Mahlzeit pro Tag toggle
+        function toggleMeal(dayIndex, meal) {
+            config.days[dayIndex][meal] = !config.days[dayIndex][meal];
+            
+            // Button-Erscheinung aktualisieren
+            const dayConfig = document.querySelectorAll('.day-config')[dayIndex];
+            const button = dayConfig.querySelector(`[onclick="toggleMeal(${dayIndex}, '${meal}')"]`);
+            button.classList.toggle('active');
+            
+            calculateTotal();
+        }
+
+        // Gesamtpreis berechnen
+        function calculateTotal() {
+            let totalPerPerson = 0;
+            let breakdown = [];
+
+            // Mahlzeiten pro Tag berechnen
+            config.days.forEach((day, index) => {
+                let dayTotal = 0;
+                let dayMeals = [];
+                
+                if (day.breakfast) {
+                    dayTotal += prices.breakfast;
+                    dayMeals.push('Frühstück');
+                }
+                if (day.lunch) {
+                    dayTotal += prices.lunch;
+                    dayMeals.push('Mittagessen');
+                }
+                if (day.dinner) {
+                    dayTotal += prices.dinner;
+                    dayMeals.push('Abendessen');
+                }
+                if (day.brunch) {
+                    dayTotal += prices.brunch;
+                    dayMeals.push('Brunch');
+                }
+                
+                if (dayTotal > 0) {
+                    breakdown.push({
+                        label: `Tag ${index + 1} (${dayMeals.join(', ')})`,
+                        price: dayTotal
+                    });
+                    totalPerPerson += dayTotal;
+                }
+            });
+
+            // Services hinzufügen
+            if (config.shopping) {
+                const shoppingCost = config.duration <= 2 ? 5 : config.duration >= 7 ? 10 : 5;
+                breakdown.push({
+                    label: 'Einkaufsservice',
+                    price: shoppingCost
+                });
+                totalPerPerson += shoppingCost;
+            }
+
+            if (config.spices) {
+                const spiceCost = config.duration >= 7 ? 2 : 1;
+                breakdown.push({
+                    label: 'Gewürzpauschale',
+                    price: spiceCost
+                });
+                totalPerPerson += spiceCost;
+            }
+
+            // Preisübersicht aktualisieren
+            const priceContainer = document.getElementById('priceBreakdown');
+            priceContainer.innerHTML = '';
+
+            breakdown.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'price-item';
+                div.innerHTML = `
+                    <span>${item.label}</span>
+                    <span>€${item.price}</span>
+                `;
+                priceContainer.appendChild(div);
+            });
+
+            // Gesamtpreis pro Person
+            const totalDiv = document.createElement('div');
+            totalDiv.className = 'price-item';
+            totalDiv.innerHTML = `
+                <span>Gesamtpreis pro Person</span>
+                <span>€${totalPerPerson}</span>
+            `;
+            priceContainer.appendChild(totalDiv);
+
+            // Gesamtpreis für alle Teilnehmer
+            const totalAllDiv = document.createElement('div');
+            totalAllDiv.className = 'price-item';
+            totalAllDiv.innerHTML = `
+                <span>Gesamtpreis für ${config.participants} Personen</span>
+                <span>€${(totalPerPerson * config.participants).toLocaleString()}</span>
+            `;
+            priceContainer.appendChild(totalAllDiv);
+        }
+
+        // Angebot generieren
+        function generateQuote() {
+            let summary = `🌈 RETREAT KONFIGURATOR - Verbindliches Angebot\n\n`;
+            summary += `Personen: ${config.participants} Personen\n`;
+            summary += `Dauer: ${config.duration} Tage\n\n`;
+            
+            summary += `TAGESWEISE VERPFLEGUNG:\n`;
+            config.days.forEach((day, index) => {
+                const meals = [];
+                if (day.breakfast) meals.push('Frühstück');
+                if (day.lunch) meals.push('Mittagessen');
+                if (day.dinner) meals.push('Abendessen');
+                if (day.brunch) meals.push('Brunch');
+                
+                if (meals.length > 0) {
+                    summary += `Tag ${index + 1}: ${meals.join(', ')}\n`;
+                }
+            });
+            
+            if (config.shopping) summary += `\nEinkaufsservice: inklusive\n`;
+            if (config.spices) summary += `Gewürzpauschale: inklusive\n`;
+            
+            const priceItems = document.querySelectorAll('.price-item');
+            const totalPrice = priceItems[priceItems.length-1].querySelector('span:last-child').textContent;
+            
+            summary += `\nGESAMTPREIS: ${totalPrice}\n\n`;
+            summary += `Wir werden uns umgehend mit einem detaillierten Angebot bei dir melden!`;
+            
+            alert(summary);
+        }
+
+        // Konfiguration speichern
+        function saveConfiguration() {
+            const configJSON = JSON.stringify(config, null, 2);
+            const blob = new Blob([configJSON], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'retreat-konfiguration.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Gespeicherte Konfiguration laden
+        function loadSavedConfig() {
+            const savedConfig = JSON.parse(localStorage.getItem('retreatConfig'));
+            if (savedConfig) {
+                // Grundkonfiguration setzen
+                if (savedConfig.duration) {
+                    document.getElementById('duration').value = savedConfig.duration;
+                    config.duration = savedConfig.duration;
+                }
+                
+                if (savedConfig.mealPlan) {
+                    config.mealPlan = savedConfig.mealPlan;
+                    document.getElementById('mealPlan-full').classList.remove('active');
+                    document.getElementById('mealPlan-brunch').classList.remove('active');
+                    document.getElementById('mealPlan-custom').classList.remove('active');
+                    document.getElementById(`mealPlan-${savedConfig.mealPlan}`).classList.add('active');
+                }
+                
+                // Services setzen
+                if (savedConfig.shopping !== undefined) {
+                    config.shopping = savedConfig.shopping;
+                    const shoppingBtn = document.getElementById('shoppingBtn');
+                    if (savedConfig.shopping) {
+                        shoppingBtn.classList.add('active');
+                    } else {
+                        shoppingBtn.classList.remove('active');
+                    }
+                }
+                
+                if (savedConfig.spices !== undefined) {
+                    config.spices = savedConfig.spices;
+                    const spicesBtn = document.getElementById('spicesBtn');
+                    if (savedConfig.spices) {
+                        spicesBtn.classList.add('active');
+                    } else {
+                        spicesBtn.classList.remove('active');
+                    }
+                }
+                
+                // LocalStorage nach dem Laden löschen
+                localStorage.removeItem('retreatConfig');
+            }
+        }
+
+        // Initialisierung beim Laden
+        window.onload = function() {
+            loadSavedConfig(); // Gespeicherte Konfiguration laden
+            generateDays();
+        };
+    </script>
+</body>
+</html> 
